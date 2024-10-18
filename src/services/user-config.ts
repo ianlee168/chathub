@@ -50,6 +50,11 @@ export enum OpenRouterClaudeModel {
   'claude-instant-v1' = 'claude-instant-v1',
 }
 
+export enum PerplexityMode {
+  Webapp = 'webapp',
+  API = 'api',
+}
+
 const userConfigWithDefaultValue = {
   openaiApiKey: '',
   openaiApiHost: 'https://api.openai.com',
@@ -74,6 +79,9 @@ const userConfigWithDefaultValue = {
   openrouterOpenAIModel: CHATGPT_API_MODELS[0] as (typeof CHATGPT_API_MODELS)[number],
   openrouterClaudeModel: OpenRouterClaudeModel['claude-2'],
   openrouterApiKey: '',
+  perplexityMode: PerplexityMode.Webapp,
+  perplexityApiKey: '',
+  geminiApiKey: '',
 }
 
 export type UserConfig = typeof userConfigWithDefaultValue
@@ -94,6 +102,8 @@ export async function getUserConfig(): Promise<UserConfig> {
   }
   if (result.chatgptApiModel === 'gpt-3.5-turbo-16k') {
     result.chatgptApiModel = 'gpt-3.5-turbo'
+  } else if (result.chatgptApiModel === 'gpt-4-32k') {
+    result.chatgptApiModel = 'gpt-4'
   }
   if (
     result.claudeApiModel !== ClaudeAPIModel['claude-2'] ||
